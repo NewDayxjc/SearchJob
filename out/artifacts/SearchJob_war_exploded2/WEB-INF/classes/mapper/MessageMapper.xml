@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 设置为IUserDao接口方法提供sql语句配置 -->
+<mapper namespace="SearchJob.dao.MessageDao">
+
+   <!-- <select id="getAllUser" parameterType="user" resultMap="SearchJob.pojo.User">
+        SELECT * FROM user
+        <trim prefix="where" prefixOverrides="and | or">
+        <if test="userId!=null">userId=#{userId}</if>
+        <if test="userName!=null and userName!=''">and userName=#{userName}</if>
+        <if test="passWord!=null">and passWord=#{passWord}</if>
+        <if test="userPower!=null and userPower='1'">and userPower=#{userPower}</if>
+        </trim>
+    </select>-->
+
+    <insert id="InsertMessage" parameterType="SearchJob.pojo.Message">
+        insert  into message
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userId!=null">userId,</if>
+            <if test="empId!=null">empId,</if>
+            <if test="mesaName!=null">mesaName,</if>
+            <if test="mesaSex!=null">mesaSex,</if>
+            <if test="mesaAge!=null">mesaAge,</if>
+            <if test="eduName!=null">eduName,</if>
+            <if test="mesaPhone!=null">mesaPhone,</if>
+            <if test="mesaIntroduce!=null">mesaIntroduce,</if>
+            <if test="mesaWant!=null">mesaWant,</if>
+            <if test="mesaDate!=null">mesaDate,</if>
+            <if test="compId!=null">compId,</if>
+            <if test="mesaPower!=null">mesaPower,</if>
+        </trim>
+
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="userId!=null">#{userId},</if>
+            <if test="empId!=null">#{empId},</if>
+            <if test="mesaName!=null">#{mesaName},</if>
+            <if test="mesaSex!=null">#{mesaSex},</if>
+            <if test="mesaAge!=null">#{mesaAge},</if>
+            <if test="eduName!=null">#{eduName},</if>
+            <if test="mesaPhone!=null">#{mesaPhone},</if>
+            <if test="mesaIntroduce!=null">#{mesaIntroduce},</if>
+            <if test="mesaWant!=null">#{mesaWant},</if>
+            <if test="mesaDate!=null">#{mesaDate},</if>
+            <if test="compId!=null">#{compId},</if>
+            <if test="mesaPower!=null">#{mesaPower},</if>
+        </trim>
+    </insert>
+    <select id="findByMessageId" parameterType="Integer" resultType="SearchJob.pojo.Message">
+        select * from message where mesaId=#{mesaId}
+    </select>
+
+    <update id="UpdateMessage" parameterType="SearchJob.pojo.Message">
+
+    </update>
+
+    <select id="findMessageByName" resultType="SearchJob.pojo.Message">
+        select * from message where empName=#{empName}
+    </select>
+<delete id="DeleteEmployee" parameterType="Integer">
+    delete * from employee where empId=#{empId}
+</delete>
+
+    <select id="getAllMessage" resultType="SearchJob.pojo.Message">
+        select * from message
+    </select>
+    <select id="getMessageByEmployeeId" resultMap="message_employee_map">
+        select * from message m left join employee e on m.empId=e.empId where e.empId=#{empId}
+    </select>
+    <select id="getMessageAndEmployee" resultMap="message_employee_map">
+        select * from message m left join employee e on m.empId=e.empId
+    </select>
+    <select id="getAllMessageByUserId" resultMap="message_user_map">
+        select * from message m left join user u on m.userId=u.userId where u.userId=#{userId}
+
+    </select>
+    <resultMap id="message_user_map" type="message">
+        <id property="mesaId" column="mesaId"/>
+        <result property="userId" column="userId"/>
+        <result property="empId" column="empId"/>
+        <result property="mesaName" column="mesaName"/>
+        <result property="mesaSex" column="mesaSex"/>
+        <result property="mesaAge" column="mesaAge"/>
+        <result property="eduName" column="eduName"/>
+        <result property="mesaPhone" column="mesaPhone"/>
+        <result property="mesaIntroduce" column="mesaIntroduce"/>
+        <result property="mesaWant" column="mesaWant"/>
+        <result property="mesaDate" column="mesaDate"/>
+        <result property="compId" column="compId"/><!--company外键-->
+        <result property="mesaPower" column="mesaPower"/>
+        <association property="user" javaType="SearchJob.pojo.User">
+            <id property="userId" column="userId"/>
+            <result property="userName" column="userName"/>
+            <result property="userAccount" column="userAccount"/>
+            <result property="userPwd" column="userPwd"/>
+            <result property="userSex" column="userSex"/>
+            <result property="userAge" column="userAge"/>
+            <result property="eduName" column="eduName"/>
+            <result property="userPhone" column="userPhone"/>
+            <result property="userPower" column="userPower"/>
+        </association>
+    </resultMap>
+    <resultMap id="message_employee_map" type="message">
+        <id property="mesaId" column="mesaId"/>
+        <result property="userId" column="userId"/>
+        <result property="empId" column="empId"/>
+        <result property="mesaName" column="mesaName"/>
+        <result property="mesaSex" column="mesaSex"/>
+        <result property="mesaAge" column="mesaAge"/>
+        <result property="eduName" column="eduName"/>
+        <result property="mesaPhone" column="mesaPhone"/>
+        <result property="mesaIntroduce" column="mesaIntroduce"/>
+        <result property="mesaWant" column="mesaWant"/>
+        <result property="mesaDate" column="mesaDate"/>
+        <result property="compId" column="compId"/><!--company外键-->
+        <result property="mesaPower" column="mesaPower"/>
+        <association property="employee" javaType="SearchJob.pojo.Employee">
+            <id property="empId" column="empId"/>
+            <result property="compId" column="compId"/>
+            <result property="empName" column="empName"/>
+            <result property="empJobName" column="empJobName"/>
+            <result property="compName" column="compName"/>
+            <result property="empContent" column="empContent"/>
+            <result property="empDate" column="empDate"/>
+            <result property="salary" column="salary"/>
+            <result property="techName" column="techName"/>
+            <result property="empArea" column="empArea"/>
+            <result property="empPhone" column="empPhone"/>
+            <result property="eduName" column="eduName"/>
+            <result property="empNumber" column="empNumber"/>
+            <result property="empExperience" column="empExperience"/>
+            <result property="empAge" column="empAge"/>
+        </association>
+    </resultMap>
+    <resultMap id="employee_company_map" type="employee">
+        <id property="empId" column="empId"/>
+        <result property="compId" column="compId"/>
+        <result property="empName" column="empName"/>
+        <result property="empJobName" column="empJobName"/>
+        <result property="compName" column="compName"/><!--取company的公司值-->
+        <result property="empContent" column="empContent"/>
+        <result property="empDate" column="empDate"/>
+        <result property="salary" column="salary"/>
+        <result property="techName" column="techName"/>
+        <result property="empArea" column="empArea"/>
+        <result property="empPhone" column="empPhone"/>
+        <result property="empPeople" column="empPeople"/>
+        <result property="eduName" column="eduName"/><!--education的外键-->
+        <result property="empNumber" column="empNumber"/>
+        <result property="empExperience" column="empExperience"/>
+        <result property="empAge" column="empAge"/>
+        <association property="company" javaType="SearchJob.pojo.Company">
+            <id property="compId" column="compId"/>
+            <result property="compName" column="compName"/>
+            <result property="compPwd" column="compPwd"/>
+            <result property="compArea" column="compArea"/>
+            <result property="compManager" column="compManager"/>
+            <result property="compIntroduce" column="compIntroduce"/>
+            <result property="compPower" column="compPower"/>
+        </association>
+    </resultMap>
+    <resultMap id="employee_education_map" type="employee" extends="employee_company_map">
+
+        <association property="eduName" javaType="SearchJob.pojo.Education">
+        <id property="eduId" column="eduId"/>
+        <result property="eduName" column="eduName"/>
+        </association>
+    </resultMap>
+</mapper>

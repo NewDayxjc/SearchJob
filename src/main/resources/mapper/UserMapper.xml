@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 设置为IUserDao接口方法提供sql语句配置 -->
+<mapper namespace="SearchJob.dao.UserDao">
+
+   <!-- <select id="getAllUser" parameterType="user" resultMap="SearchJob.pojo.User">
+        SELECT * FROM user
+        <trim prefix="where" prefixOverrides="and | or">
+        <if test="userId!=null">userId=#{userId}</if>
+        <if test="userName!=null and userName!=''">and userName=#{userName}</if>
+        <if test="passWord!=null">and passWord=#{passWord}</if>
+        <if test="userPower!=null and userPower='1'">and userPower=#{userPower}</if>
+        </trim>
+    </select>-->
+    <select id="findByUserAccountAndPassword"  resultType="SearchJob.pojo.User">
+        SELECT * FROM user where userAccount=#{userAccount} and userPwd=#{userPwd}
+
+    </select>
+    <insert id="InsertUser" parameterType="SearchJob.pojo.User">
+        insert  into user(`userName`,`userAccount`,`userPwd`,`userSex`,`userAge`,`eduName`,`userPhone`,`userPower`) values (#{userName},#{userAccount},#{userPwd},#{userSex},#{userAge},#{eduName},#{userPhone},#{userPower})
+    </insert>
+    <select id="findByUserId" parameterType="Integer" resultType="SearchJob.pojo.User">
+        select * from user where userId=#{userId}
+    </select>
+
+    <update id="UpdateUserPwd" parameterType="SearchJob.pojo.User">
+        update  user set userPwd=#{userPwd} where  userId=#{userId}
+    </update>
+    <select id="getAllUser" resultType="SearchJob.pojo.User">
+        select * from user
+    </select>
+    <select id="findUserByName" resultType="SearchJob.pojo.User">
+        select * from user where userName=#{userName}
+    </select>
+    <resultMap id="user_message_map" type="user">
+        <id property="userId" column="userId"/>
+        <result property="userName" column="userName"/>
+        <result property="userAccount" column="userAccount"/>
+        <result property="userPwd" column="userPwd"/>
+        <result property="userSex" column="userSex"/>
+        <result property="userAge" column="userAge"/>
+        <result property="eduName" column="eduName"/>
+        <result property="userPhone" column="userPhone"/>
+        <result property="userPower" column="userPower"/>
+        <collection property="messages" ofType="message">
+            <id property="mesaId" column="mesaId"/>
+            <result property="userId" column="userId"/>
+            <result property="empId" column="empId"/>
+            <result property="mesaName" column="mesaName"/>
+            <result property="mesaSex" column="mesaSex"/>
+            <result property="mesaAge" column="mesaAge"/>
+            <result property="eduName" column="eduName"/>
+            <result property="mesaPhone" column="mesaPhone"/>
+            <result property="mesaIntroduce" column="mesaIntroduce"/>
+            <result property="mesaWant" column="mesaWant"/>
+            <result property="mesaDate" column="mesaDate"/>
+            <result property="compId" column="compId"/><!--company外键-->
+            <result property="mesaPower" column="mesaPower"/>
+        </collection>
+
+    </resultMap>
+</mapper>

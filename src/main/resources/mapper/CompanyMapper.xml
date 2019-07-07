@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 设置为IUserDao接口方法提供sql语句配置 -->
+<mapper namespace="SearchJob.dao.CompanyDao">
+
+   <!-- <select id="getAllUser" parameterType="user" resultMap="SearchJob.pojo.User">
+        SELECT * FROM user
+        <trim prefix="where" prefixOverrides="and | or">
+        <if test="userId!=null">userId=#{userId}</if>
+        <if test="userName!=null and userName!=''">and userName=#{userName}</if>
+        <if test="passWord!=null">and passWord=#{passWord}</if>
+        <if test="userPower!=null and userPower='1'">and userPower=#{userPower}</if>
+        </trim>
+    </select>-->
+    <select id="findByCompanyAccountAndPassword"  resultType="SearchJob.pojo.Company">
+        SELECT * FROM company where compAccount=#{compAccount} and compPwd=#{compPwd}
+    </select>
+    <insert id="InsertCompany" parameterType="SearchJob.pojo.Company">
+        insert  into company(`compName`, `compAccount`,`compPwd`,`compArea`,`compManager`,`compIntroduce`,`compPower`) values (#{compName},#{compAccount},#{compPwd},#{compArea},#{compManager},#{compIntroduce},#{compPower})
+    </insert>
+    <select id="findByCompanyId" parameterType="Integer" resultType="SearchJob.pojo.Company">
+        select * from company where compId=#{compId}
+    </select>
+    <select id="findAllCompany">
+        select * from company
+    </select>
+    <update id="UpdateCompany" parameterType="SearchJob.pojo.Company">
+        update  company set compName=#{compName},compArea=#{compArea},compManager=#{compManager},compIntroduce=#{compIntroduce}
+        where compId=#{compId}
+    </update>
+    <update id="UpdateCompanyPwd" parameterType="SearchJob.pojo.Company">
+        update  company set
+         compPwd=#{compPwd} where  compId=#{compId}
+    </update>
+    <select id="getAllCompany" resultType="SearchJob.pojo.Company">
+        select * from company
+    </select>
+    <select id="findCompanyByName" resultType="SearchJob.pojo.Company">
+        select * from company where compName=#{compName}
+    </select>
+    <resultMap id="company_employee_map" type="company">
+        <id property="compId" column="compId"/>
+        <result property="compName" column="compName"/>
+        <result property="compAccount" column="compAccount"/>
+        <result property="compPwd" column="compPwd"/>
+        <result property="compArea" column="compArea"/>
+        <result property="compManager" column="compManager"/>
+        <result property="compIntroduce" column="compIntroduce"/>
+        <result property="compPower" column="compPower"/>
+        <collection property="employees" ofType="employee">
+        <id property="empId" column="empId"/>
+       <result property="compId" column="compId"/>
+        <result property="empName" column="empName"/>
+            <result property="empJobName" column="empJobName"/>
+        <result property="compName" column="compName"/>
+        <result property="empContent" column="empContent"/>
+        <result property="empDate" column="empDate"/>
+        <result property="salary" column="salary"/>
+        <result property="techName" column="techName"/>
+        <result property="empArea" column="empArea"/>
+        <result property="empPhone" column="empPhone"/>
+        <result property="empPeople" column="empPeople"/>
+            <result property="eduName" column="eduName"/>
+        <result property="empNumber" column="empNumber"/>
+        <result property="empExperience" column="empExperience"/>
+        <result property="empAge" column="empAge"/>
+        </collection>
+
+    </resultMap>
+
+</mapper>

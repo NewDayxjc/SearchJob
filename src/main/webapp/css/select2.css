@@ -1,0 +1,11 @@
+.diy_select{height:22px;width:116px; padding:5px;position:relative;font-size:14px;background:#fff; background:url(../images/bft_search2.jpg) right top no-repeat;float:left; margin-left:28px;}
+.diy_select_btn,.diy_select_txt{float:left;height:100%;line-height:25px; color:#000}
+.diy_select,.diy_select_list{border:1px solid #73839F;}
+.diy_select_txt{width:119px;}
+.diy_select_txt,.diy_select_list li{text-indent:8px;overflow:hidden}
+.diy_select_btn{width:28px;}
+.diy_select_list{position:absolute;top:34px;left:-1px;z-index:88888;border-top:none;width:100%;display:none;_top:29px; background:#fff; color:#444}
+.diy_select_list li{list-style:none;height:18px;line-height:18px; font-size:13px; padding:5px;cursor:default;_background:#fff}
+.diy_select_list li.focus{background:#39f;color:#fff}
+
+.diy_select_2{height:22px;width:116px; padding:5px;position:relative;font-size:14px;background:#fff; background:url(../images/bft_search2.jpg) right top no-repeat;float:left; margin-left:28px;}

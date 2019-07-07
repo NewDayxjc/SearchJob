@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 设置为IUserDao接口方法提供sql语句配置 -->
+<mapper namespace="SearchJob.dao.EducationDao">
+
+   <!-- <select id="getAllUser" parameterType="user" resultMap="SearchJob.pojo.User">
+        SELECT * FROM user
+        <trim prefix="where" prefixOverrides="and | or">
+        <if test="userId!=null">userId=#{userId}</if>
+        <if test="userName!=null and userName!=''">and userName=#{userName}</if>
+        <if test="passWord!=null">and passWord=#{passWord}</if>
+        <if test="userPower!=null and userPower='1'">and userPower=#{userPower}</if>
+        </trim>
+    </select>-->
+
+    <select id="InsertUser" parameterType="SearchJob.pojo.Education">
+        insert  into user(`userName`,`userPwd`,`userPower`) values (#{userName},#{userPwd},#{userPower})
+    </select>
+    <select id="findByUserId" parameterType="Integer" resultType="SearchJob.pojo.User">
+        select * from user where userId=#{userId}
+    </select>
+    <select id="findAllUser">
+        select * from user
+    </select>
+    <update id="UpdateUserPwd" parameterType="SearchJob.pojo.User">
+        update  user set userPwd=#{userPwd} where  userId=#{userId}
+    </update>
+    <select id="getAllUser" resultType="SearchJob.pojo.User">
+        select * from user
+    </select>
+    <select id="findUserByName" resultType="SearchJob.pojo.User">
+        select * from user where userName=#{userName}
+    </select>
+
+    <resultMap id="education_employee_map" type="education">
+        <id property="eduId" column="eduId"/>
+        <result property="eduName" column="eduName"/>
+        <collection property="employees" ofType="employee">
+            <id property="empId" column="empId"/>
+            <result property="compId" column="compId"/>
+            <result property="empName" column="empName"/>
+            <result property="comName" column="comName"/>
+            <result property="empContent" column="empContent"/>
+            <result property="empDate" column="empDate"/>
+            <result property="salary" column="salary"/>
+            <result property="techName" column="techName"/>
+            <result property="empArea" column="empArea"/>
+            <result property="empPhone" column="empPhone"/>
+            <result property="empPeople" column="empPeople"/>
+            <result property="eduName" column="eduName"/>
+            <result property="empNumber" column="empNumber"/>
+            <result property="empExperience" column="empExperience"/>
+            <result property="empAge" column="empAge"/>
+        </collection>
+
+    </resultMap>
+</mapper>
